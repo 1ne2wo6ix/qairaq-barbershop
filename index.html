@@ -15,6 +15,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Inter:wght@400;500;600&display=swap&subset=cyrillic-ext" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script src="js/config.js"></script>
+  <script>
+    /* Фон первого экрана: подключаем сразу, чтобы браузер начал грузить его как можно раньше */
+    (function (b) {
+      var d = b.heroPhoto, m = b.heroPhotoMobile || d, r = document.documentElement;
+      if (!d) return;
+      r.classList.add("has-hero");
+      var abs = function (p) { return "url('" + new URL(p, location.href).href + "')"; };
+      r.style.setProperty("--hero-d", abs(d));
+      r.style.setProperty("--hero-m", abs(m));
+      [[m, "(max-width: 767px)"], [d, "(min-width: 768px)"]].forEach(function (x) {
+        var l = document.createElement("link");
+        l.rel = "preload"; l.as = "image"; l.href = x[0]; l.media = x[1]; l.fetchPriority = "high";
+        document.head.appendChild(l);
+      });
+    })(window.SITE.brand);
+  </script>
 </head>
 <body>
 

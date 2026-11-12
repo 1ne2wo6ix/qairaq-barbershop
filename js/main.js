@@ -80,7 +80,7 @@
     $("#mastersList").innerHTML = S.masters.map(function (m) {
       var name = tr(m.name);
       return '<article class="master">' +
-        '<div class="master__photo">' + photo(m.photo, name, "i-user") + '</div>' +
+        '<div class="master__photo">' + photo(m.photo, tr(m.alt) || name, "i-user") + '</div>' +
         '<div class="master__body"><h3>' + esc(name) + '</h3>' +
         '<p class="master__role">' + esc(tr(m.role)) + '</p>' +
         '<p class="master__skills">' + esc(tr(m.skills)) + '</p>' +
@@ -94,7 +94,7 @@
     $("#galleryList").innerHTML = S.gallery.map(function (g, i) {
       var label = tr(g.label);
       return '<figure class="gallery__item g' + (i % 6) + '">' +
-        photo(g.photo, label, "i-scissors", t("photoSoon")) +
+        photo(g.photo, tr(g.alt) || label, "i-scissors", t("photoSoon")) +
         '<figcaption>' + esc(label) + '</figcaption></figure>';
     }).join("");
   }
@@ -161,11 +161,6 @@
   var onScroll = function () { header.classList.toggle("is-scrolled", window.scrollY > 10); };
   window.addEventListener("scroll", onScroll, { passive: true });
 
-  if (S.brand.heroPhoto) {
-    var bg = $(".hero__bg");
-    bg.style.backgroundImage = "url('" + S.brand.heroPhoto + "')";
-    bg.classList.add("has-photo");
-  }
-  document.title =S.brand.name + " " + S.brand.tagline + " — " + tr(S.brand.city);
+  document.title = S.brand.name + " " + S.brand.tagline + " — " + tr(S.brand.city);
   applyLang(); onScroll(); initMap();
 })();
